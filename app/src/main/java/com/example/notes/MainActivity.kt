@@ -26,7 +26,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Initialize the adapter and attach it to the RecyclerView
-        notesAdapter = NotesAdapter(notesList)
+        notesAdapter = NotesAdapter(notesList) { position ->
+            notesList.removeAt(position)
+            notesAdapter.notifyDataSetChanged()
+        }
         recyclerView.adapter = notesAdapter
 
         // Set up the button click listener to add a new note

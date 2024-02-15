@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 // Assuming Note is a data class with a single String property
 data class Note(val text: String)
 
-class NotesAdapter(private val notesList: List<Note>) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter(private val notesList: List<Note>, private val onNoteLongClick: (Int) -> Unit) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     // Provide a reference to the views for each data item
     class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -28,6 +28,10 @@ class NotesAdapter(private val notesList: List<Note>) : RecyclerView.Adapter<Not
         // Get element from your dataset at this position and replace the contents of the view with that element
         val note = notesList[position]
         holder.noteTextView.text = note.text
+        holder.itemView.setOnLongClickListener {
+            onNoteLongClick(position)
+            true
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
