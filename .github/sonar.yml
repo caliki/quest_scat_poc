@@ -28,6 +28,9 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
+      - name: Generate Kover Coverage Report
+        run: ./gradlew koverXmlReport
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1
         with:
@@ -35,3 +38,5 @@ jobs:
           project: "quest_scat_poc"
           token: ${{ secrets.SONAR_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          args: >
+            -Dsonar.kotlin.coverage.reportPaths=build/reports/kover/report.xml
